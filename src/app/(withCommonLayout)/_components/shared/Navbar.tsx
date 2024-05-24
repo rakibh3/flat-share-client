@@ -34,6 +34,9 @@ const Navbar = () => {
             <Link href="/about" className={getLinkClass('/about')}>
               About Us
             </Link>
+            <Link href="/dashboard" className={getLinkClass('/about')}>
+              Dashboard
+            </Link>
             <Link href="/login" className={getLinkClass('/login')}>
               Login
             </Link>

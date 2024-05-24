@@ -78,7 +78,7 @@ export default function UserSidebar({}: Props) {
           },
           {
             title: 'Flats',
-            href: '/dashboard/flats',
+            href: '/dashboard/my-flats',
             icon: DoorOpen,
             variant: 'ghost',
           },
