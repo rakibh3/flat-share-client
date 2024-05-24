@@ -2,14 +2,21 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '../../../../../public/assets/logo.svg';
+import { usePathname } from 'next/navigation';
+import logo from '@/../public/assets/logo.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const getLinkClass = (path: string) =>
+    pathname === path
+      ? 'block text-rose-600 font-bold'
+      : 'block text-gray-800 hover:text-rose-600';
 
   return (
     <nav className="bg-white sticky top-0 shadow-md z-10">
@@ -21,25 +28,16 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden md:flex space-x-4">
-            <Link href="/" className="block text-gray-800 hover:text-rose-600">
+            <Link href="/" className={getLinkClass('/')}>
               Home
             </Link>
-            <Link
-              href="/about"
-              className="block text-gray-800 hover:text-rose-600"
-            >
+            <Link href="/about" className={getLinkClass('/about')}>
               About Us
             </Link>
-            <Link
-              href="/login"
-              className="block text-gray-800 hover:text-rose-600"
-            >
+            <Link href="/login" className={getLinkClass('/login')}>
               Login
             </Link>
-            <Link
-              href="/profile"
-              className="block text-gray-800 hover:text-rose-600"
-            >
+            <Link href="/profile" className={getLinkClass('/profile')}>
               My Profile
             </Link>
           </div>
@@ -47,6 +45,7 @@ const Navbar = () => {
             <button
               onClick={toggleMenu}
               className="text-gray-800 hover:text-rose-600"
+              aria-label="Toggle menu"
             >
               <svg
                 className="h-6 w-6"
@@ -68,28 +67,16 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Link
-                href="/"
-                className="block text-gray-800 hover:text-rose-600"
-              >
+              <Link href="/" className={getLinkClass('/')}>
                 Home
               </Link>
-              <Link
-                href="/about"
-                className="block text-gray-800 hover:text-rose-600"
-              >
+              <Link href="/about" className={getLinkClass('/about')}>
                 About Us
               </Link>
-              <Link
-                href="/login"
-                className="block text-gray-800 hover:text-rose-600"
-              >
+              <Link href="/login" className={getLinkClass('/login')}>
                 Login
               </Link>
-              <Link
-                href="/profile"
-                className="block text-gray-800 hover:text-rose-600"
-              >
+              <Link href="/profile" className={getLinkClass('/profile')}>
                 My Profile
               </Link>
             </div>
