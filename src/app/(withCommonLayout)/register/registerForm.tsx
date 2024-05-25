@@ -11,6 +11,7 @@ import { useEdgeStore } from '@/lib/edgestore';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Spinner from '../_components/shared/Spinner';
 
 const validationSchema = z.object({
   name: z
@@ -48,7 +49,7 @@ const RegisterFormPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(validationSchema),
   });
@@ -88,6 +89,7 @@ const RegisterFormPage = () => {
     formData.append('email', email);
     formData.append('password', password);
     formData.append('profilePhoto', fileUrl);
+
     formAction(formData);
   };
 
@@ -297,9 +299,10 @@ const RegisterFormPage = () => {
       <div className="mt-6">
         <Button
           type="submit"
+          disabled={isSubmitting}
           className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-rose-500 rounded-lg hover:bg-rose-400 focus:outline-none focus:ring focus:ring-rose-300 focus:ring-opacity-50"
         >
-          Sign Up
+          {isSubmitting ? <Spinner /> : 'Sign Up'}
         </Button>
 
         <div className="mt-6 text-center ">
