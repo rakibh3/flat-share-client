@@ -95,7 +95,7 @@ const RegisterFormPage = () => {
 
   useEffect(() => {
     if (state && state.success) {
-      toast.success('successfully Registered', { duration: 8000 });
+      toast.success('Successfully Registered!');
     } else {
       toast.error(state?.message, { duration: 8000 });
     }
