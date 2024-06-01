@@ -5,11 +5,11 @@ type Props = {};
 import {
   Home,
   UsersRound,
-  Settings,
   ChevronRight,
   DoorOpen,
   LayoutDashboard,
   KeyRound,
+  LogOut,
 } from 'lucide-react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { Nav } from '@/app/(withDashboardLayout)/_components/nav';
@@ -31,7 +31,6 @@ export default function AdminSidebar({}: Props) {
   }
 
   return (
-    // <div className="relative min-w-[80px] border-r px-3  pb-10 pt-24 ">
     <div
       className={`relative min-w-[80px]  border-r px-3 pb-10 pt-24 flex flex-col justify-between h-full ${
         isCollapsed ? 'min-w-[80px]' : 'md:min-w-[200px]'
@@ -83,9 +82,9 @@ export default function AdminSidebar({}: Props) {
             variant: 'ghost',
           },
           {
-            title: 'Settings',
-            href: '/settings',
-            icon: Settings,
+            title: 'Logout',
+            href: '/logout',
+            icon: LogOut,
             variant: 'ghost',
           },
         ]}

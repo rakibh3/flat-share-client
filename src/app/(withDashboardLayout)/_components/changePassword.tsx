@@ -3,18 +3,8 @@ import Image from 'next/image';
 const ChangePassword = () => {
   return (
     <section className="bg-white dark:bg-gray-900">
-      <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
+      <div className="container flex items-center justify-center mt-12 px-6 mx-auto">
         <form className="w-full max-w-md">
-          <div className="flex justify-center mx-auto">
-            <Image
-              className="w-auto h-7 sm:h-8"
-              src="https://merakiui.com/images/logo.svg"
-              alt=""
-              width={150}
-              height={32}
-            />
-          </div>
-
           <div className="flex items-center justify-center mt-6">
             <a
               href="#"
@@ -44,7 +34,7 @@ const ChangePassword = () => {
 
             <input
               type="password"
-              className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-rose-400 dark:focus:border-rose-300 focus:ring-rose-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              className="block w-full  px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-rose-400 dark:focus:border-rose-300 focus:ring-rose-300 focus:outline-none focus:ring focus:ring-opacity-40"
               placeholder="Old Password"
             />
           </div>
