@@ -3,8 +3,8 @@ import Image from 'next/image';
 const FooterPage = () => {
   return (
     <>
-      <footer className="bg-white">
-        <div className="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+      <footer className="px-4">
+        <div className=" pb-6 pt-16 lg:pt-24">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:col-span-2 content-center">
             <div className="text-center sm:text-left">
               <div className="flex justify-center text-rose-600 sm:justify-start">
