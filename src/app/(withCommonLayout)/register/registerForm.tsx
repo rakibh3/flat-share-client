@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Spinner from '../_components/shared/Spinner';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const validationSchema = z.object({
   name: z
@@ -46,6 +46,7 @@ const RegisterFormPage = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [file, setFile] = useState<File>();
   const { edgestore } = useEdgeStore();
+  const router = useRouter();
 
   const {
     register,
@@ -102,13 +103,13 @@ const RegisterFormPage = () => {
         toast.success('Successfully Registered You Can Login Now!', {
           duration: 8000,
         });
-        redirect('/login');
+        router.push('/login');
       } else {
         toast.error(state?.message, { duration: 8000 });
       }
     }
     prevStateRef.current = state;
-  }, [state]);
+  }, [state, router]);
 
   return (
     <form className="w-full max-w-md" onSubmit={handleSubmit(onSubmit)}>

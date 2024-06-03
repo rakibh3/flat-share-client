@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import logo from '@/../public/assets/logo.svg';
+import { logoutUser } from '../../_action/authAction';
+import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
 
 const Navbar = ({ user }: any) => {
   const routeMap: Record<string, string> = {
@@ -13,6 +16,7 @@ const Navbar = ({ user }: any) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -23,6 +27,12 @@ const Navbar = ({ user }: any) => {
       ? 'block text-rose-600 font-bold'
       : 'block text-gray-800 hover:text-rose-600';
 
+  const handleLogout = async () => {
+    await logoutUser();
+    toast.success('Logged out successfully');
+    router.push('/');
+  };
+
   return (
     <nav className="bg-white sticky top-0 shadow-md z-10">
       <div className="mx-auto px-4">
@@ -32,16 +42,14 @@ const Navbar = ({ user }: any) => {
               <Image src={logo} alt="logo" width={40} height={40} />
             </Link>
           </div>
-          <div className="hidden md:flex space-x-4">
+          <div className="items-center hidden md:flex space-x-4">
             <Link href="/" className={getLinkClass('/')}>
               Home
             </Link>
             <Link href="/about" className={getLinkClass('/about')}>
               About Us
             </Link>
-            {/* <Link href="/dashboard" className={getLinkClass('/dashboard')}>
-              
-            </Link> */}
+
             {user ? (
               <>
                 <Link
@@ -53,14 +61,12 @@ const Navbar = ({ user }: any) => {
                 <Link href="/profile" className={getLinkClass('/profile')}>
                   My Profile
                 </Link>
-                <Link href="/logout" className={getLinkClass('/logout')}>
-                  Logout
-                </Link>
+                <Button onClick={handleLogout}>Logout</Button>
               </>
             ) : (
-              <Link href="/login" className={getLinkClass('/login')}>
-                Login
-              </Link>
+              <Button>
+                <Link href="/login">Login</Link>
+              </Button>
             )}
           </div>
           <div className="md:hidden">

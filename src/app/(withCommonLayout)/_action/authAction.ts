@@ -65,3 +65,12 @@ export const userInfo = async () => {
     console.error(error);
   }
 };
+
+export const logoutUser = async () => {
+  try {
+    cookies().delete('token');
+    // cookies().delete('refreshToken');
+  } catch (error) {
+    console.error(error);
+  }
+};

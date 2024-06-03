@@ -21,6 +21,7 @@ interface NavProps {
     icon: LucideIcon;
     variant: 'default' | 'ghost';
     href: string;
+    onClick?: () => void;
   }[];
 }
 
@@ -39,6 +40,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 <TooltipTrigger asChild>
                   <Link
                     href={link.href}
+                    onClick={link.onClick}
                     className={cn(
                       buttonVariants({
                         variant: link.href === pathName ? 'default' : 'ghost',
@@ -69,6 +71,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
               <Link
                 key={index}
                 href={link.href}
+                onClick={link.onClick}
                 className={cn(
                   buttonVariants({
                     variant: link.href === pathName ? 'default' : 'ghost',

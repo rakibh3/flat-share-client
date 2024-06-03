@@ -14,10 +14,14 @@ import {
 import { useWindowWidth } from '@react-hook/window-size';
 import { Nav } from '@/app/(withDashboardLayout)/_components/nav';
 import { Button } from '@/components/ui/button';
+import { logoutUser } from '@/app/(withCommonLayout)/_action/authAction';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function AdminSidebar({}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
 
   const onlyWidth = useWindowWidth();
   const mobileWidth = onlyWidth < 768;
@@ -29,6 +33,12 @@ export default function AdminSidebar({}: Props) {
   function toggleSidebar() {
     setIsCollapsed(!isCollapsed);
   }
+
+  const handleLogout = async () => {
+    await logoutUser();
+    toast.success('Logged out successfully');
+    router.push('/');
+  };
 
   return (
     <div
@@ -83,9 +93,10 @@ export default function AdminSidebar({}: Props) {
           },
           {
             title: 'Logout',
-            href: '/logout',
+            href: '#',
             icon: LogOut,
             variant: 'ghost',
+            onClick: handleLogout,
           },
         ]}
       />

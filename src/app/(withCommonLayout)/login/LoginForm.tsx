@@ -7,11 +7,12 @@ import { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import Spinner from '../_components/shared/Spinner';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(loginUser, null);
   const prevStateRef = useRef(state);
+  const router = useRouter();
 
   const {
     register,
@@ -32,13 +33,13 @@ const LoginForm = () => {
     if (prevStateRef.current !== state) {
       if (state && state.success) {
         toast.success('Logged In Successfully!');
-        redirect('/');
+        router.push('/');
       } else {
         toast.error(state?.message, { duration: 8000 });
       }
     }
     prevStateRef.current = state;
-  }, [state]);
+  }, [state, router]);
 
   return (
     <div>
