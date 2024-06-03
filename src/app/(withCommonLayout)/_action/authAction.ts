@@ -1,6 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { jwtDecode } from 'jwt-decode';
 
 export const registerUser = async (pre: FormData, formData: FormData) => {
   try {
@@ -31,16 +32,35 @@ export const loginUser = async (pre: FormData, formData: FormData) => {
         'Content-Type': 'application/json',
       },
       body: formattedData,
+      // credentials: 'include',
     });
 
     const data = await res.json();
-    let { success, message } = data;
+
     if (data?.success) {
       cookies().set('token', data?.data.token);
-      cookies().set('refreshToken', data?.data.refreshToken);
+      // cookies().set('refreshToken', data?.data.refreshToken);
     }
 
     return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const userInfo = async () => {
+  try {
+    const token = cookies().get('token')?.value;
+    let decodedData = null;
+
+    if (token) {
+      decodedData = jwtDecode(token) as any;
+      return {
+        id: decodedData.id,
+        email: decodedData?.email,
+        role: decodedData?.role,
+      };
+    } else return null;
   } catch (error) {
     console.error(error);
   }

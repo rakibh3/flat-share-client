@@ -5,7 +5,12 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import logo from '@/../public/assets/logo.svg';
 
-const Navbar = () => {
+const Navbar = ({ user }: any) => {
+  const routeMap: Record<string, string> = {
+    USER: '/dashboard',
+    ADMIN: '/dashboard/admin',
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -34,15 +39,29 @@ const Navbar = () => {
             <Link href="/about" className={getLinkClass('/about')}>
               About Us
             </Link>
-            <Link href="/dashboard" className={getLinkClass('/about')}>
-              Dashboard
-            </Link>
-            <Link href="/login" className={getLinkClass('/login')}>
-              Login
-            </Link>
-            <Link href="/profile" className={getLinkClass('/profile')}>
-              My Profile
-            </Link>
+            {/* <Link href="/dashboard" className={getLinkClass('/dashboard')}>
+              
+            </Link> */}
+            {user ? (
+              <>
+                <Link
+                  href={routeMap[user.role]}
+                  className={getLinkClass(routeMap[user.role])}
+                >
+                  Dashboard
+                </Link>
+                <Link href="/profile" className={getLinkClass('/profile')}>
+                  My Profile
+                </Link>
+                <Link href="/logout" className={getLinkClass('/logout')}>
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <Link href="/login" className={getLinkClass('/login')}>
+                Login
+              </Link>
+            )}
           </div>
           <div className="md:hidden">
             <button
