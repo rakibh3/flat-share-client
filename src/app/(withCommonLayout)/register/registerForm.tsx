@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useFormState } from 'react-dom';
 import { registerUser } from '../_action/authAction';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { SingleImageDropzone } from '@/components/SingleImageDropzone';
 import { useEdgeStore } from '@/lib/edgestore';
@@ -12,6 +12,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Spinner from '../_components/shared/Spinner';
+import { redirect, usePathname } from 'next/navigation';
 
 const validationSchema = z.object({
   name: z
@@ -54,6 +55,8 @@ const RegisterFormPage = () => {
     resolver: zodResolver(validationSchema),
   });
 
+  const prevStateRef = useRef(state);
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -94,11 +97,17 @@ const RegisterFormPage = () => {
   };
 
   useEffect(() => {
-    if (state && state.success) {
-      toast.success('Successfully Registered!');
-    } else {
-      toast.error(state?.message, { duration: 8000 });
+    if (prevStateRef.current !== state) {
+      if (state && state.success) {
+        toast.success('Successfully Registered You Can Login Now!', {
+          duration: 8000,
+        });
+        redirect('/login');
+      } else {
+        toast.error(state?.message, { duration: 8000 });
+      }
     }
+    prevStateRef.current = state;
   }, [state]);
 
   return (
