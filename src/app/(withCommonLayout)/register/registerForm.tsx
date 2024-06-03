@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Spinner from '../_components/shared/Spinner';
-import { redirect, usePathname } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 const validationSchema = z.object({
   name: z
