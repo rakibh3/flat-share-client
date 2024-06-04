@@ -41,3 +41,26 @@ export const updateFlat = async (
     console.error(error);
   }
 };
+
+export const deleteFlat = async (flatId: string) => {
+  try {
+    const token = cookies().get('token')?.value as string;
+    const headers = new Headers();
+    headers.append('Authorization', token);
+    headers.append('Content-Type', 'application/json');
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/flats/${flatId}`,
+      {
+        method: 'DELETE',
+        headers: headers,
+      }
+    );
+    if (res.ok) {
+      revalidateTag('flats');
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(error);
+  }
+};

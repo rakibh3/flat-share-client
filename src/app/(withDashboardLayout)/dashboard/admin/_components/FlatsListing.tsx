@@ -12,15 +12,27 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import FlatEditModal from './FlatEditModal';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
+import { deleteFlat } from '../adminAction/AdminAction';
+import toast from 'react-hot-toast';
 
 const FlatsListing = ({ flatsData: flatListings }: any) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedFlat, setSelectedFlat] = useState(null);
 
-  function handleDelete(id: any) {
-    console.log(`Deleting flat with ID: ${id}`);
-  }
+  const handleDelete = async (id: any) => {
+    try {
+      const isDeleted = await deleteFlat(id);
+      if (isDeleted) {
+        toast.success('Flat deleted successfully');
+      } else {
+        toast.error('Failed to delete flat');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('An error occurred while deleting flat');
+    }
+  };
 
   const handleEdit = (flat: any) => {
     setSelectedFlat(flat);
