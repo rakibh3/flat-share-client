@@ -14,6 +14,7 @@ export default async function CommonLayout({
   children: React.ReactNode;
 }>) {
   const user = await userInfo();
+
   return (
     <div className="mx-auto md:container">
       <Navbar user={user} />

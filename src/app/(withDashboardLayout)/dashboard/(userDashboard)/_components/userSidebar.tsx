@@ -18,11 +18,13 @@ import { Button } from '@/components/ui/button';
 import { logoutUser } from '@/app/(withCommonLayout)/_action/authAction';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/AuthProvider';
 
 export default function UserSidebar({}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+  const { setUser } = useAuth();
 
   const onlyWidth = useWindowWidth();
   const mobileWidth = onlyWidth < 768;
@@ -37,6 +39,7 @@ export default function UserSidebar({}: Props) {
 
   const handleLogout = async () => {
     await logoutUser();
+    setUser(null);
     toast.success('Logged out successfully');
     router.push('/');
   };

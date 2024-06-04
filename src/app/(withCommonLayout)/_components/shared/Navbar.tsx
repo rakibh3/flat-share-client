@@ -7,8 +7,11 @@ import logo from '@/../public/assets/logo.svg';
 import { logoutUser } from '../../_action/authAction';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
+import { useAuth } from '@/lib/AuthProvider';
 
 const Navbar = ({ user }: any) => {
+  const { setUser } = useAuth();
+
   const routeMap: Record<string, string> = {
     USER: '/dashboard',
     ADMIN: '/dashboard/admin',
@@ -29,6 +32,7 @@ const Navbar = ({ user }: any) => {
 
   const handleLogout = async () => {
     await logoutUser();
+    setUser(null);
     toast.success('Logged out successfully');
     router.push('/');
   };
