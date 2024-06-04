@@ -1,5 +1,6 @@
 'use client';
-import { Button } from '@/components/ui/button';
+
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import {
   BedSingle,
   CheckCircleIcon,
@@ -10,14 +11,26 @@ import {
   XCircleIcon,
 } from 'lucide-react';
 import Link from 'next/link';
+import FlatEditModal from './FlatEditModal';
+import { useCallback, useState } from 'react';
 
 const FlatsListing = ({ flatsData: flatListings }: any) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedFlat, setSelectedFlat] = useState(null);
+
   function handleDelete(id: any) {
     console.log(`Deleting flat with ID: ${id}`);
   }
-  function handleEdit(id: any) {
-    console.log(`Editing flat with ID: ${id}`);
-  }
+
+  const handleEdit = (flat: any) => {
+    setSelectedFlat(flat);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedFlat(null);
+  };
 
   return (
     <div className="mx-auto py-12 px-2">
@@ -67,14 +80,24 @@ const FlatsListing = ({ flatsData: flatListings }: any) => {
                 <td className="px-4 py-2 text-center">
                   <div className="flex justify-center gap-2">
                     {/* Edit */}
-                    <Link
-                      href="#"
-                      className="bg-rose-400 hover:bg-rose-500 text-gray-800 font-medium py-1 px-2 rounded flex items-center gap-2"
-                      onClick={() => handleEdit(flat.id)}
-                      prefetch={false}
-                    >
-                      <EditIcon className="w-4 h-6" />
-                    </Link>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Link
+                          href="#"
+                          className="bg-rose-400 hover:bg-rose-500 text-gray-800 font-medium py-1 px-2 rounded flex items-center gap-2"
+                          onClick={() => handleEdit(flat)}
+                          prefetch={false}
+                        >
+                          <EditIcon className="w-4 h-6" />
+                        </Link>
+                      </DialogTrigger>
+                      {selectedFlat && (
+                        <FlatEditModal
+                          flat={selectedFlat}
+                          closeModal={closeEditModal}
+                        />
+                      )}
+                    </Dialog>
 
                     {/* Delete */}
                     <Link
