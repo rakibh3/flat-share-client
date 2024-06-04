@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const updateFlat = async (
@@ -34,6 +35,7 @@ export const updateFlat = async (
     );
 
     const data = await res.json();
+    revalidateTag('flats');
     return data;
   } catch (error) {
     console.error(error);
