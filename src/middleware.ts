@@ -44,7 +44,6 @@ export function middleware(request: NextRequest) {
   }
 
   const role = decodedData?.role;
-  console.log(decodedData);
 
   if (role && roleBasedPrivateRoutes[role as Role]) {
     const routes = roleBasedPrivateRoutes[role as Role];

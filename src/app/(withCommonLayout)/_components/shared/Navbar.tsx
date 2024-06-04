@@ -101,12 +101,26 @@ const Navbar = ({ user }: any) => {
               <Link href="/about" className={getLinkClass('/about')}>
                 About Us
               </Link>
-              <Link href="/login" className={getLinkClass('/login')}>
-                Login
-              </Link>
-              <Link href="/profile" className={getLinkClass('/profile')}>
-                My Profile
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href={routeMap[user.role]}
+                    className={getLinkClass(routeMap[user.role])}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link href="/profile" className={getLinkClass('/profile')}>
+                    My Profile
+                  </Link>
+                  <Button onClick={handleLogout}>Logout</Button>
+                </>
+              ) : (
+                <>
+                  <Button>
+                    <Link href="/login">Login</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
