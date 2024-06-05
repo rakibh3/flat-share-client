@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { LocateIcon } from 'lucide-react';
 
-const FlatRequestCard = ({ flatRequestsData }) => {
+const FlatRequestCard = ({ flatRequestsData }: any) => {
   const [requests, setRequests] = useState(flatRequestsData?.data || []);
-  // console.log(flatRequestsData?.data?.flat.location);
 
   return (
     <Card className="container mx-auto py-8 px-4 md:px-6">

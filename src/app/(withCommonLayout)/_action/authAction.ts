@@ -66,6 +66,31 @@ export const userInfo = async () => {
   }
 };
 
+export const changePasword = async (pre: FormData, formData: FormData) => {
+  try {
+    const formattedData = JSON.stringify(Object.fromEntries(formData));
+
+    const token = cookies().get('token')?.value as string;
+    const headers = new Headers();
+    headers.append('Authorization', token);
+    headers.append('Content-Type', 'application/json');
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/change-password`,
+      {
+        method: 'POST',
+        headers: headers,
+        body: formattedData,
+      }
+    );
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const logoutUser = async () => {
   try {
     cookies().delete('token');
