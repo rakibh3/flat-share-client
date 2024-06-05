@@ -1,10 +1,10 @@
-import { BedIcon, MapPinIcon, RulerIcon } from 'lucide-react';
+import { BedIcon, DollarSignIcon, MapPinIcon, RulerIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const FlatList = ({ flats }: any) => {
-  const slicedFlats = flats.slice(0, 8);
+  const slicedFlats = flats?.data.slice(0, 8);
   return (
     <div className="grid">
       <h2 className=" text-center my-8 text-4xl font-semibold text-gray-800 dark:text-gray-200">
@@ -31,35 +31,36 @@ const FlatList = ({ flats }: any) => {
               />
             </Link>
             <div className="p-4">
-              <div className="flex items-center justify-end">
-                {/* <div className="flex items-center gap-2">
-                <span className="text-sm">Downtown</span>
-              </div> */}
-                <div className="text-lg font-semibold text-gray-800">
-                  ${flat.rent}/mo
-                </div>
-              </div>
               <h3 className="text-lg font-semibold mt-2 flex gap-2 items-center">
                 <MapPinIcon className="w-5 h-5 text-gray-400 dark:text-gray-400" />
                 <p className="text-sm text-gray-700">{flat.location}</p>
               </h3>
               <p className="text-gray-500 dark:text-gray-400 mt-2">
-                {flat.description}
+                {flat.description.length > 44
+                  ? flat.description.slice(0, 48) + '...'
+                  : flat.description}
               </p>
 
               <div className="flex items-center justify-between mt-4 gap-2">
                 <span className="flex gap-1 items-center">
                   <BedIcon className="w-5 h-5  text-gray-500 dark:text-gray-400" />
-                  <span className="text-[12px] font-medium">
+                  <span className="text-[12px] font-medium mt-1">
                     {flat.totalBedrooms} Bedrooms
                   </span>
                 </span>
                 <span className="flex gap-1 items-center">
-                  <RulerIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                  <span className="text-[12px] font-medium">
-                    {flat.squareFeet} sq ft
+                  <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  <span className="text-[12px] font-bold mt-1">
+                    {flat.rent}/mo
                   </span>
                 </span>
+              </div>
+              <div>
+                <Link href={`/flat/${flat.id}`} className="block mt-4">
+                  <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">
+                    View Details
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
