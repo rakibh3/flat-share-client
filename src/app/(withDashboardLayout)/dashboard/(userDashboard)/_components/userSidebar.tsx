@@ -95,18 +95,7 @@ export default function UserSidebar({}: Props) {
             icon: DoorOpen,
             variant: 'ghost',
           },
-          {
-            title: 'Profile',
-            href: '/edit-profile',
-            icon: Settings,
-            variant: 'ghost',
-          },
-          {
-            title: 'Change Password',
-            href: '/dashboard/change-password',
-            icon: KeyRound,
-            variant: 'ghost',
-          },
+
           {
             title: 'Logout',
             href: '#',

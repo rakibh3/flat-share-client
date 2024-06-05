@@ -29,9 +29,10 @@ export function Nav({ links, isCollapsed }: NavProps) {
   const pathName = usePathname();
   return (
     <TooltipProvider>
+      {/* fixed left-0 Fixed side bar */}
       <div
         data-collapsed={isCollapsed}
-        className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
+        className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2 fixed left-0"
       >
         <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
           {links.map((link, index) =>

@@ -45,7 +45,7 @@ export default function AdminSidebar({}: Props) {
 
   return (
     <div
-      className={`relative min-w-[80px]  border-r px-3 pb-10 pt-24 flex flex-col justify-between h-full ${
+      className={`relative min-w-[80px]border-r px-3 pb-10 pt-24 flex flex-col justify-between h-full ${
         isCollapsed ? 'min-w-[80px]' : 'md:min-w-[200px]'
       }`}
     >
@@ -86,12 +86,6 @@ export default function AdminSidebar({}: Props) {
             title: 'Flats',
             href: '/dashboard/admin/flats',
             icon: DoorOpen,
-            variant: 'ghost',
-          },
-          {
-            title: 'Change Password',
-            href: '/dashboard/admin/change-password',
-            icon: KeyRound,
             variant: 'ghost',
           },
           {
