@@ -59,7 +59,6 @@ const ManageUsersPage = ({ usersData }: any) => {
     } else if (state?.success === false) {
       toast.error(state?.message);
     }
-    console.log(state);
   }, [state]);
 
   return (

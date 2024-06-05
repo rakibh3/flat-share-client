@@ -1,3 +1,4 @@
+'use client';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import {
@@ -8,10 +9,29 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
-const Search = () => {
+const Search = ({ handleSearch }: any) => {
+  const [location, setLocation] = useState('');
+  const [priceRangeMin, setPriceRangeMin] = useState('');
+  const [priceRangeMax, setPriceRangeMax] = useState('');
+  const [bedrooms, setBedrooms] = useState('');
+
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    handleSearch({
+      location,
+      priceRangeMin,
+      priceRangeMax,
+      bedrooms,
+    });
+  };
+
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 border-y mt-10">
+    <section
+      id="search"
+      className="w-full py-12 md:py-24 lg:py-32 border-y mt-10"
+    >
       <div className="px-4 md:px-6 space-y-10 xl:space-y-16">
         <div className="grid max-w-[1300px] mx-auto gap-4 sm:gap-16 md:grid-cols-2">
           <div>
@@ -24,30 +44,46 @@ const Search = () => {
           </div>
         </div>
         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 md:p-6 lg:p-8">
-          <form className="grid gap-4 md:grid-cols-[1fr_1fr_1fr_auto]">
+          <form
+            className="grid gap-4 md:grid-cols-[1fr_1fr_1fr_auto]"
+            onSubmit={onSubmit}
+          >
             <div className="grid gap-2">
               <Label htmlFor="location" className="text-sm font-medium">
                 Location
               </Label>
-              <Input id="location" placeholder="Enter a city or neighborhood" />
+              <Input
+                id="location"
+                placeholder="Enter a city or neighborhood"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="price-range" className="text-sm font-medium">
                 Price Range
               </Label>
               <div className="flex gap-2">
-                <Input id="price-range-min" placeholder="Min" />
+                <Input
+                  id="price-range-min"
+                  placeholder="Min"
+                  value={priceRangeMin}
+                  onChange={(e) => setPriceRangeMin(e.target.value)}
+                />
                 <span className="text-gray-500 dark:text-gray-400 mt-2">-</span>
-                <Input id="price-range-max" placeholder="Max" />
+                <Input
+                  id="price-range-max"
+                  placeholder="Max"
+                  value={priceRangeMax}
+                  onChange={(e) => setPriceRangeMax(e.target.value)}
+                />
               </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="bedrooms" className="text-sm font-medium">
                 Bedrooms
               </Label>
-              <Select
-              //   id="bedrooms"
-              >
+              <Select onValueChange={(value) => setBedrooms(value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Any" />
                 </SelectTrigger>

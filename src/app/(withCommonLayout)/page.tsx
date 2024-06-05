@@ -1,16 +1,21 @@
-import FlatList from '@/app/(withCommonLayout)/_components/Flat/FlatList';
-import HeroSection from './_components/shared/HeroSection';
-import Search from './_components/shared/Search';
-import Testimonial from './_components/shared/Testimonial';
+import HomePage from './_components/HomePage';
 
-const HomePage = () => {
+const MainHomePage = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/flats`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    next: {
+      tags: ['homeFlats'],
+    },
+  });
+  const flats = await res.json();
+
   return (
     <div>
-      <HeroSection />
-      <Search />
-      <FlatList />
-      <Testimonial />
+      <HomePage flats={flats} />
     </div>
   );
 };
-export default HomePage;
+export default MainHomePage;

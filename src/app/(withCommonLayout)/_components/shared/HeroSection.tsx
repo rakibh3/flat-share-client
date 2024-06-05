@@ -26,14 +26,14 @@ const HeroSection = () => {
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Link
-                href="#"
+                href="/dashboard/add-flat"
                 className="inline-flex h-10 items-center justify-center rounded-md bg-[#E11D48] px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-rose-600/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-rose-50 dark:text-white dark:hover:bg-rose-50/80 dark:focus-visible:ring-rose-300"
                 prefetch={false}
               >
                 Share Your Flat
               </Link>
               <Link
-                href="#"
+                href="#search"
                 className="inline-flex h-10 items-center justify-center rounded-md border border-rose-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-rose-100 hover:text-rose-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rose-950 disabled:pointer-events-none disabled:opacity-50  dark:border-rose-800 dark:bg-rose-950 dark:hover:bg-rose-800 dark:hover:text-rose-50 dark:focus-visible:ring-rose-300"
                 prefetch={false}
               >
