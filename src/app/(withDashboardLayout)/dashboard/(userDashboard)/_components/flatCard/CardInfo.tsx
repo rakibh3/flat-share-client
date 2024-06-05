@@ -11,7 +11,7 @@ const CardInfo: React.FC<CardInfoProps> = ({ price, address }) => {
       <dl>
         <div>
           <dt className="sr-only">Price</dt>
-          <dd className="text-sm text-gray-500">{price}</dd>
+          <dd className="text-sm text-gray-500">${price}/month</dd>
         </div>
         <div>
           <dt className="sr-only">Address</dt>

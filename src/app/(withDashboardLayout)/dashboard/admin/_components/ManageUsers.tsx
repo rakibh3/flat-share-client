@@ -38,7 +38,7 @@ const ManageUsersPage = ({ usersData }: any) => {
     formData.append('role', newRole);
     formAction(formData);
   };
-  const handleUserStatusChange = async (userId: any, newStatus: any) => {
+  const handleUserStatusChange = (userId: any, newStatus: any) => {
     setUsers((prevUsers: any) =>
       prevUsers.map((user: any) =>
         user.id === userId ? { ...user, status: newStatus } : user
@@ -50,7 +50,7 @@ const ManageUsersPage = ({ usersData }: any) => {
     const formData = new FormData();
     formData.append('activeStatus', newStatus);
 
-    await formAction(formData);
+    formAction(formData);
   };
 
   useEffect(() => {

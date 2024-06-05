@@ -2,9 +2,7 @@
 
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import {
-  BedSingle,
   CheckCircleIcon,
-  DeleteIcon,
   DoorClosedIcon,
   EditIcon,
   Trash2Icon,

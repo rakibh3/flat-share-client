@@ -1,11 +1,24 @@
+import { cookies } from 'next/headers';
 import FlatCard from '../_components/flatCard';
 
-const MyFlatsPage = () => {
+const MyFlatsPage = async () => {
+  const token = cookies().get('token')?.value as string;
+  const headers = new Headers();
+  headers.append('Authorization', token);
+  headers.append('Content-Type', 'application/json');
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/my-flats`, {
+    headers: headers,
+    next: {
+      tags: ['myFlats'],
+    },
+  });
+
+  const myFlatsData = await res.json();
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 lg:mt-16 md:mx-4 lg:gap-6">
-      <FlatCard />
-      <FlatCard />
-      <FlatCard />
+    <div>
+      <FlatCard myFlatsData={myFlatsData?.data} />
     </div>
   );
 };
