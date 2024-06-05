@@ -8,27 +8,49 @@ import { logoutUser } from '../../_action/authAction';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/lib/AuthProvider';
+import profileImg from '@/../public/assets/profile.png';
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
+import {
+  DeleteIcon,
+  Edit,
+  HomeIcon,
+  LayoutDashboard,
+  LockIcon,
+  LogOut,
+  RectangleEllipsis,
+  ShieldAlert,
+} from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const Navbar = ({ user }: any) => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const { setUser } = useAuth();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const routeMap: Record<string, string> = {
     USER: '/dashboard',
     ADMIN: '/dashboard/admin',
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-  const router = useRouter();
-
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setMenuIsOpen((prevState) => !prevState);
   };
 
   const getLinkClass = (path: string) =>
     pathname === path
-      ? 'block text-rose-600 font-bold'
-      : 'block text-gray-800 hover:text-rose-600';
+      ? 'block text-rose-600 font-bold flex gap-2'
+      : 'block text-gray-800 hover:text-rose-600 flex gap-2';
+
+  const handleLogin = () => {
+    router.push('/login');
+  };
 
   const handleLogout = async () => {
     await logoutUser();
@@ -62,72 +84,176 @@ const Navbar = ({ user }: any) => {
                 >
                   Dashboard
                 </Link>
-                <Link href="/profile" className={getLinkClass('/profile')}>
-                  My Profile
-                </Link>
-                <Button onClick={handleLogout}>Logout</Button>
+
+                {/* Dropdown Profile */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <Avatar>
+                        {user?.profileImg ? (
+                          <Image
+                            src={user.profileImg}
+                            alt="Avatar"
+                            height={40}
+                            width={40}
+                          />
+                        ) : (
+                          <Image
+                            src={profileImg}
+                            alt="Avatar"
+                            height={40}
+                            width={40}
+                          />
+                        )}
+                        <AvatarFallback>PP</AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem>
+                      <Link
+                        href="#"
+                        className="flex items-center gap-2"
+                        prefetch={false}
+                      >
+                        <Edit className="h-4 w-4" />
+                        Edit Profile
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link
+                        href="/change-password"
+                        className="flex items-center gap-2"
+                        prefetch={false}
+                      >
+                        <RectangleEllipsis className="h-4 w-4" />
+                        Change Password
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-2"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </button>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             ) : (
-              <Button>
-                <Link href="/login">Login</Link>
-              </Button>
+              <Button onClick={handleLogin}>Login</Button>
             )}
           </div>
+
+          {/* Mobile Navbar */}
           <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              className="text-gray-800 hover:text-rose-600"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            </button>
+            {/* Dropdown Profile Mobile*/}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Avatar>
+                    {user?.profileImg ? (
+                      <Image
+                        src={user.profileImg}
+                        alt="Avatar"
+                        height={40}
+                        width={40}
+                      />
+                    ) : (
+                      <Image
+                        src={profileImg}
+                        alt="Avatar"
+                        height={40}
+                        width={40}
+                      />
+                    )}
+                    <AvatarFallback>PP</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem>
+                  <Link
+                    href="/"
+                    // className="flex items-center gap-2"
+                    className={getLinkClass('/')}
+                    prefetch={false}
+                  >
+                    <HomeIcon className="h-4 w-4" />
+                    Home
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link
+                    href="/about"
+                    // className="flex items-center gap-2"
+                    className={getLinkClass('/about')}
+                    prefetch={false}
+                  >
+                    <ShieldAlert className="h-4 w-4" />
+                    About Us
+                  </Link>
+                </DropdownMenuItem>
+                {user ? (
+                  <>
+                    <DropdownMenuItem>
+                      <Link
+                        href={routeMap[user.role]}
+                        className={getLinkClass(routeMap[user.role])}
+                      >
+                        <LayoutDashboard className="h-4 w-4" />
+                        Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link
+                        href="#"
+                        className="flex items-center gap-2"
+                        prefetch={false}
+                      >
+                        <Edit className="h-4 w-4" />
+                        Edit Profile
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link
+                        href="/change-password"
+                        className="flex items-center gap-2"
+                        prefetch={false}
+                      >
+                        <RectangleEllipsis className="h-4 w-4" />
+                        Change Password
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-2"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </button>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem>
+                      <button
+                        onClick={handleLogin}
+                        className="flex items-center gap-2"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Login
+                      </button>
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
-        {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Link href="/" className={getLinkClass('/')}>
-                Home
-              </Link>
-              <Link href="/about" className={getLinkClass('/about')}>
-                About Us
-              </Link>
-              {user ? (
-                <>
-                  <Link
-                    href={routeMap[user.role]}
-                    className={getLinkClass(routeMap[user.role])}
-                  >
-                    Dashboard
-                  </Link>
-                  <Link href="/profile" className={getLinkClass('/profile')}>
-                    My Profile
-                  </Link>
-                  <Button onClick={handleLogout}>Logout</Button>
-                </>
-              ) : (
-                <>
-                  <Button>
-                    <Link href="/login">Login</Link>
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </nav>
   );
