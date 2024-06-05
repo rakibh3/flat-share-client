@@ -64,3 +64,37 @@ export const deleteFlat = async (flatId: string) => {
     console.error(error);
   }
 };
+
+export const updateUser = async (
+  userId: string,
+  pre: FormData,
+  formData: FormData
+) => {
+  try {
+    const formattedData = JSON.stringify(Object.fromEntries(formData));
+    console.log(formattedData);
+    console.log(userId);
+
+    const token = cookies().get('token')?.value as string;
+    const headers = new Headers();
+    headers.append('Authorization', token);
+    headers.append('Content-Type', 'application/json');
+    console.log(`${process.env.NEXT_PUBLIC_SERVER_URL}/manager-user/${userId}`);
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/manager-user/${userId}`,
+      {
+        method: 'PUT',
+        headers: headers,
+        body: formattedData,
+      }
+    );
+
+    const data = await res.json();
+
+    revalidateTag('users');
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
