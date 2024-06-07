@@ -1,10 +1,11 @@
 import { BedIcon, DollarSignIcon, MapPinIcon, RulerIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 const FlatList = ({ flats }: any) => {
-  const slicedFlats = flats?.data?.slice(0, 8);
+  // const slicedFlats = flats?.data?.slice(0, 8);
+  console.log('Feature', flats?.data);
+  const slicedFlats = flats?.data;
   return (
     <div className="grid">
       <h2 className=" text-center my-8 text-4xl font-semibold text-gray-800 dark:text-gray-200">
