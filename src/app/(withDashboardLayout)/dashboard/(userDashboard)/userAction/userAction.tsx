@@ -20,19 +20,16 @@ export const updateMyFlat = async (
 
     const formattedData = JSON.stringify(newFormData);
 
-    const token = cookies().get('token')?.value as string;
+    const token = cookies().get('token')?.value || '';
     const headers = new Headers();
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/flats/${flatId}`,
-      {
-        method: 'PUT',
-        headers: headers,
-        body: formattedData,
-      }
-    );
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/flats/${flatId}`, {
+      method: 'PUT',
+      headers: headers,
+      body: formattedData,
+    });
 
     const data = await res.json();
     revalidateTag('myFlats');
@@ -44,17 +41,14 @@ export const updateMyFlat = async (
 
 export const deleteMyFlat = async (flatId: string) => {
   try {
-    const token = cookies().get('token')?.value as string;
+    const token = cookies().get('token')?.value || '';
     const headers = new Headers();
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/flats/${flatId}`,
-      {
-        method: 'DELETE',
-        headers: headers,
-      }
-    );
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/flats/${flatId}`, {
+      method: 'DELETE',
+      headers: headers,
+    });
     if (res.ok) {
       revalidateTag('myFlats');
       return true;

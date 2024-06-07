@@ -4,19 +4,19 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const FlatList = ({ flats }: any) => {
-  const slicedFlats = flats?.data.slice(0, 8);
+  const slicedFlats = flats?.data?.slice(0, 8);
   return (
     <div className="grid">
       <h2 className=" text-center my-8 text-4xl font-semibold text-gray-800 dark:text-gray-200">
         Featured Flats
       </h2>
-      {slicedFlats.length === 0 && (
+      {slicedFlats?.length === 0 && (
         <div className="text-2xl font-medium text-center text-gray-500 dark:text-gray-400">
           No flats found
         </div>
       )}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 md:p-6 lg:p-8">
-        {slicedFlats.map((flat: any) => (
+        {slicedFlats?.map((flat: any) => (
           <div
             key={flat.id}
             className="bg-white rounded-lg overflow-hidden shadow-md dark:bg-gray-950 dark:text-gray-200"

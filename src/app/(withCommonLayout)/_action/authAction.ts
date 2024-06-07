@@ -7,7 +7,7 @@ export const registerUser = async (pre: FormData, formData: FormData) => {
   try {
     const formattedData = JSON.stringify(Object.fromEntries(formData));
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/register`, {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export const loginUser = async (pre: FormData, formData: FormData) => {
   try {
     const formattedData = JSON.stringify(Object.fromEntries(formData));
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export const loginUser = async (pre: FormData, formData: FormData) => {
 
 export const userInfo = async () => {
   try {
-    const token = cookies().get('token')?.value;
+    const token = cookies().get('token')?.value || '';
     let decodedData = null;
 
     if (token) {
@@ -70,13 +70,13 @@ export const changePasword = async (pre: FormData, formData: FormData) => {
   try {
     const formattedData = JSON.stringify(Object.fromEntries(formData));
 
-    const token = cookies().get('token')?.value as string;
+    const token = cookies().get('token')?.value || '';
     const headers = new Headers();
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/change-password`,
+      `${process.env.NEXTAUTH_URL}/change-password`,
       {
         method: 'POST',
         headers: headers,

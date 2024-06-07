@@ -28,7 +28,7 @@ const ManageUsersPage = ({ usersData }: any) => {
 
   const handleUserRoleChange = (userId: any, newRole: any) => {
     setUsers((prevUsers: any) =>
-      prevUsers.map((user: any) =>
+      prevUsers?.map((user: any) =>
         user.id === userId ? { ...user, role: newRole } : user
       )
     );
@@ -74,7 +74,7 @@ const ManageUsersPage = ({ usersData }: any) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user: any) => (
+            {users?.map((user: any) => (
               <TableRow key={user.id}>
                 <TableCell className="font-medium">{user.username}</TableCell>
                 <TableCell>{user.email}</TableCell>

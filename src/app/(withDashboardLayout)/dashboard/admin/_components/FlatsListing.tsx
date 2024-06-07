@@ -59,7 +59,7 @@ const FlatsListing = ({ flatsData: flatListings }: any) => {
             </tr>
           </thead>
           <tbody>
-            {flatListings.map((flat: any) => (
+            {flatListings?.map((flat: any) => (
               <tr
                 key={flat.id}
                 className="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"

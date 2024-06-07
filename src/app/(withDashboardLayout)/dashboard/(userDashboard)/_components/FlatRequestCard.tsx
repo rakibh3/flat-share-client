@@ -12,7 +12,7 @@ const FlatRequestCard = ({ flatRequestsData }: any) => {
         <h1 className="text-2xl font-bold">Flat Requests</h1>
       </CardHeader>
       <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {requests.map((request: any) => (
+        {requests?.map((request: any) => (
           <Card key={request.id}>
             <CardContent className="grid grid-cols-1  items-center justify-center gap-2 pt-5">
               <div className="flex items-center gap-4">

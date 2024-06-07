@@ -20,19 +20,16 @@ export const updateFlat = async (
 
     const formattedData = JSON.stringify(newFormData);
 
-    const token = cookies().get('token')?.value as string;
+    const token = cookies().get('token')?.value || '';
     const headers = new Headers();
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/flats/${flatId}`,
-      {
-        method: 'PUT',
-        headers: headers,
-        body: formattedData,
-      }
-    );
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/flats/${flatId}`, {
+      method: 'PUT',
+      headers: headers,
+      body: formattedData,
+    });
 
     const data = await res.json();
     revalidateTag('flats');
@@ -44,17 +41,14 @@ export const updateFlat = async (
 
 export const deleteFlat = async (flatId: string) => {
   try {
-    const token = cookies().get('token')?.value as string;
+    const token = cookies().get('token')?.value || '';
     const headers = new Headers();
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/flats/${flatId}`,
-      {
-        method: 'DELETE',
-        headers: headers,
-      }
-    );
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/flats/${flatId}`, {
+      method: 'DELETE',
+      headers: headers,
+    });
     if (res.ok) {
       revalidateTag('flats');
       return true;
@@ -75,14 +69,14 @@ export const updateUser = async (
     console.log(formattedData);
     console.log(userId);
 
-    const token = cookies().get('token')?.value as string;
+    const token = cookies().get('token')?.value || '';
     const headers = new Headers();
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
-    console.log(`${process.env.NEXT_PUBLIC_SERVER_URL}/manager-user/${userId}`);
+    console.log(`${process.env.NEXTAUTH_URL}/manager-user/${userId}`);
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/manager-user/${userId}`,
+      `${process.env.NEXTAUTH_URL}/manager-user/${userId}`,
       {
         method: 'PUT',
         headers: headers,

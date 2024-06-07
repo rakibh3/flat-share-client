@@ -7,12 +7,22 @@ export const metadata: Metadata = {
 };
 
 const FlatManagePage = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/flats`, {
-    next: {
-      tags: ['flats'],
-    },
-  });
-  const flatsData = await res.json();
+  let flatsData = [];
+  try {
+    const serverUrl = process.env.NEXTAUTH_URL;
+    if (!serverUrl) throw new Error('Server URL not found');
+    const res = await fetch(`${serverUrl}/flats`, {
+      cache: 'no-cache',
+      next: {
+        tags: ['flats'],
+      },
+    });
+    if (!res.ok) throw new Error('Error fetching flats data');
+
+    flatsData = await res.json();
+  } catch (error) {
+    console.error('Error fetching flats data:', error);
+  }
 
   return (
     <div>

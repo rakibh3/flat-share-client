@@ -2,12 +2,12 @@ import { cookies } from 'next/headers';
 import ManageUsersPage from '../_components/ManageUsers';
 
 const UsersPage = async () => {
-  const token = cookies().get('token')?.value as string;
+  const token = cookies().get('token')?.value || '';
   const headers = new Headers();
   headers.append('Authorization', token);
   headers.append('Content-Type', 'application/json');
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-users`, {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/all-users`, {
     headers: headers,
     next: {
       tags: ['users'],

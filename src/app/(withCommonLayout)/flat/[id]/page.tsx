@@ -3,33 +3,39 @@ import { useEffect, useState } from 'react';
 import Spinner from '../../_components/shared/Spinner';
 import Link from 'next/link';
 import Image from 'next/image';
-import {
-  ConciergeBellIcon,
-  MapPinIcon,
-  ParkingMeterIcon,
-  SandwichIcon,
-  StoreIcon,
-  WashingMachineIcon,
-  WifiIcon,
-} from 'lucide-react';
+import { MapPinIcon } from 'lucide-react';
+
+type FlatDetails = {
+  id: string;
+  location: string;
+  description: string;
+  rent: number;
+  totalBedrooms: number;
+  totalRooms: number;
+  squareFeet: number;
+  amenities: string[];
+};
 
 const FlatDetailsPage = ({ params }: any) => {
-  const [flatDetails, setFlatDetails] = useState(null);
+  const [flatDetails, setFlatDetails] = useState<{ data: FlatDetails } | null>(
+    null
+  );
+
   const flatDetailsInfo = flatDetails?.data;
 
   useEffect(() => {
     const fetchFlatDetails = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/flat/${params.id}`,
+          `${process.env.NEXTAUTH_URL}/flat/${params.id}`,
           {
             method: 'GET',
-
-            next: {
-              tags: ['flatDetails'],
-            },
           }
         );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
         setFlatDetails(data);
       } catch (error) {
@@ -111,35 +117,37 @@ const FlatDetailsPage = ({ params }: any) => {
             <h3 className="text-lg font-medium">Location</h3>
             <div className="flex items-center gap-2">
               <MapPinIcon className="w-5 h-5" />
-              <span>{flatDetailsInfo.location}</span>
+              <span>{flatDetailsInfo?.location}</span>
             </div>
           </div>
           <div>
             <p className="mt-3 text-lg text-gray-500 dark:text-gray-400">
-              {flatDetailsInfo.description}
+              {flatDetailsInfo?.description}
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-1">
               <h3 className="text-lg font-medium">Rent</h3>
               <p className="text-2xl font-bold">
-                ${flatDetailsInfo.rent}/month
+                ${flatDetailsInfo?.rent}/month
               </p>
             </div>
             <div className="space-y-1">
               <h3 className="text-lg font-medium">Bedrooms</h3>
               <p className="text-2xl font-bold">
-                {flatDetailsInfo.totalBedrooms}
+                {flatDetailsInfo?.totalBedrooms}
               </p>
             </div>
             <div className="space-y-1">
               <h3 className="text-lg font-medium">Total Rooms</h3>
-              <p className="text-2xl font-bold">{flatDetailsInfo.totalRooms}</p>
+              <p className="text-2xl font-bold">
+                {flatDetailsInfo?.totalRooms}
+              </p>
             </div>
             <div className="space-y-1">
               <h3 className="text-lg font-medium">Size</h3>
               <p className="text-2xl font-bold">
-                {flatDetailsInfo.squareFeet} sq ft
+                {flatDetailsInfo?.squareFeet} sq ft
               </p>
             </div>
           </div>
@@ -156,7 +164,7 @@ const FlatDetailsPage = ({ params }: any) => {
 
           <div className="flex justify-end">
             <Link
-              href="#"
+              href={`/dashboard/flat-requests/${flatDetailsInfo?.id}`}
               className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
               prefetch={false}
             >
