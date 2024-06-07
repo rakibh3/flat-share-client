@@ -21,11 +21,12 @@ const FlatList = ({ flats }: any) => {
           >
             <Link href="#" className="block" prefetch={false}>
               <Image
-                src="/placeholder.svg"
+                src={flat.flatPhotos[0]}
                 alt="Flat 1"
                 width={600}
                 height={400}
                 className="w-full h-48 object-cover"
+                priority
               />
             </Link>
             <div className="p-4">

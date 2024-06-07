@@ -15,60 +15,58 @@ const FlatDetailsPage = async ({ params }: any) => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* Images */}
         <div className="grid grid-cols-2 gap-4 lg:gap-6">
-          <Link
-            href="#"
-            className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300"
-            prefetch={false}
-          >
-            <Image
-              src="/placeholder.svg"
-              alt="Flat Image"
-              width={400}
-              height={400}
-              className="object-cover aspect-square"
-            />
-          </Link>
-          <Link
-            href="#"
-            className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300"
-            prefetch={false}
-          >
-            <Image
-              src="/placeholder.svg"
-              alt="Flat Image"
-              width={400}
-              height={400}
-              className="object-cover aspect-square"
-            />
-          </Link>
-          <Link
-            href="#"
-            className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300"
-            prefetch={false}
-          >
-            <Image
-              src="/placeholder.svg"
-              alt="Flat Image"
-              width={400}
-              height={400}
-              className="object-cover aspect-square"
-            />
-          </Link>
-          <Link
-            href="#"
-            className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300"
-            prefetch={false}
-          >
-            <Image
-              src="/placeholder.svg"
-              alt="Flat Image"
-              width={400}
-              height={400}
-              className="object-cover aspect-square"
-            />
-          </Link>
+          <div className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300">
+            {data?.flatPhotos[0] && (
+              <Image
+                src={data?.flatPhotos[0]}
+                alt="flat image"
+                width={400}
+                height={300}
+                className="w-full h-48 object-cover"
+                priority
+              />
+            )}
+          </div>
+          <div className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300">
+            {data?.flatPhotos[1] && (
+              <Image
+                src={data?.flatPhotos[1]}
+                alt="flat image"
+                width={400}
+                height={300}
+                className="w-full h-48 object-cover"
+                priority
+              />
+            )}
+          </div>
+          <div className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300">
+            {data?.flatPhotos[2] && (
+              <Image
+                src={data?.flatPhotos[2]}
+                alt="flat image"
+                width={400}
+                height={300}
+                className="w-full h-48 object-cover"
+                priority
+              />
+            )}
+          </div>
+          <div className="relative overflow-hidden rounded-lg transition-all after:opacity-0 after:absolute after:inset-0 after:bg-black hover:after:opacity-20 focus:after:opacity-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300">
+            {data?.flatPhotos[3] && (
+              <Image
+                src={data?.flatPhotos[3]}
+                alt="flat image"
+                width={400}
+                height={300}
+                className="w-full h-48 object-cover"
+                priority
+              />
+            )}
+          </div>
         </div>
+
         <div className="space-y-6 lg:space-y-8">
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Location</h3>
