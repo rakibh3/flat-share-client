@@ -7,9 +7,7 @@ import FlatList from './Flat/FlatList';
 import Testimonial from './shared/Testimonial';
 
 const HomePage = ({ flats }: any) => {
-  console.log(flats);
   const [filteredFlats, setFilteredFlats] = useState(flats);
-  console.log(filteredFlats);
 
   const handleSearch = (criteria: any) => {
     // Perform filtering

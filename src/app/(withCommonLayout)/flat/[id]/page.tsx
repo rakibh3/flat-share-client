@@ -6,6 +6,9 @@ import { MapPinIcon } from 'lucide-react';
 const FlatDetailsPage = async ({ params }: any) => {
   const res = await fetch(`${process.env.NEXTAUTH_URL}/flat/${params.id}`);
   const { data } = await res.json();
+  if (!data) {
+    return <Spinner />;
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
