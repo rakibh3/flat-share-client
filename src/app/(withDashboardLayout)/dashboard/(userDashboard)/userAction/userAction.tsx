@@ -15,7 +15,6 @@ export const updateMyFlat = async (
       totalBedrooms: Number(Object?.fromEntries(formData).totalBedrooms),
       totalRooms: Number(Object?.fromEntries(formData).totalRooms),
       squareFeet: Number(Object?.fromEntries(formData).squareFeet),
-      advanceAmount: Number(Object?.fromEntries(formData).advanceAmount),
     };
 
     const formattedData = JSON.stringify(newFormData);
@@ -57,4 +56,20 @@ export const deleteMyFlat = async (flatId: string) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const addNewFlat = async (data: any) => {
+  const token = cookies().get('token')?.value || '';
+  const headers = new Headers();
+  headers.append('Authorization', token);
+  headers.append('Content-Type', 'application/json');
+
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/flats`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data),
+  });
+  const flatData = await res.json();
+  revalidateTag('myFlats');
+  return flatData;
 };

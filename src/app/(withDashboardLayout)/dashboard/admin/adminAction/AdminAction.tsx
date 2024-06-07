@@ -66,8 +66,6 @@ export const updateUser = async (
 ) => {
   try {
     const formattedData = JSON.stringify(Object.fromEntries(formData));
-    console.log(formattedData);
-    console.log(userId);
 
     const token = cookies().get('token')?.value || '';
     const headers = new Headers();

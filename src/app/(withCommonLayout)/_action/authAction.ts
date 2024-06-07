@@ -75,14 +75,11 @@ export const changePasword = async (pre: FormData, formData: FormData) => {
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
 
-    const res = await fetch(
-      `${process.env.NEXTAUTH_URL}/change-password`,
-      {
-        method: 'POST',
-        headers: headers,
-        body: formattedData,
-      }
-    );
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/change-password`, {
+      method: 'POST',
+      headers: headers,
+      body: formattedData,
+    });
 
     const data = await res.json();
     return data;
@@ -99,3 +96,5 @@ export const logoutUser = async () => {
     console.error(error);
   }
 };
+
+const editProfile = async () => {};

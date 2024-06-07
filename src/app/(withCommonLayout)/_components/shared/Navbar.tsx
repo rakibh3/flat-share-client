@@ -17,16 +17,14 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
 import {
-  DeleteIcon,
   Edit,
   HomeIcon,
   LayoutDashboard,
-  LockIcon,
   LogOut,
   RectangleEllipsis,
   ShieldAlert,
 } from 'lucide-react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const Navbar = ({ user }: any) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -112,7 +110,7 @@ const Navbar = ({ user }: any) => {
                   <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuItem>
                       <Link
-                        href="#"
+                        href="/edit-profile"
                         className="flex items-center gap-2"
                         prefetch={false}
                       >
@@ -209,7 +207,7 @@ const Navbar = ({ user }: any) => {
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Link
-                        href="#"
+                        href="/edit-profile"
                         className="flex items-center gap-2"
                         prefetch={false}
                       >
