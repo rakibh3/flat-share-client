@@ -44,18 +44,19 @@ const FlatCard = ({ myFlatsData: flats }: any) => {
         <h1 className="text-2xl font-bold">Rental Flats</h1>
         <Button>Add New Flat</Button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {flats?.map((flat: any) => (
           <div
             key={flat.id}
             className="bg-white rounded-lg shadow-md overflow-hidden"
           >
             <Image
-              src="/placeholder.svg"
-              alt={flat.flatPhotos}
+              src={flat.flatPhotos[0]}
+              alt="flat image"
               width={400}
               height={300}
               className="w-full h-48 object-cover"
+              priority
             />
             <div className="p-4">
               <h3 className="text-lg font-bold mb-2 flex gap-1 items-center">

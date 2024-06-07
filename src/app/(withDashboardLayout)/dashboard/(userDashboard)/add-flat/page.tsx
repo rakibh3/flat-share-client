@@ -3,16 +3,42 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { DollarSign } from 'lucide-react';
-import FileUpload from '../_components/fileUpload';
 import { useForm } from 'react-hook-form';
 import Spinner from '@/app/(withCommonLayout)/_components/shared/Spinner';
 import { addNewFlat } from '../userAction/userAction';
+import { useState } from 'react';
+import {
+  MultiImageDropzone,
+  type FileState,
+} from '@/components/MultiImageDropzone';
+import { useEdgeStore } from '@/lib/edgestore';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const AddFlat = () => {
+  const router = useRouter();
+  const [fileStates, setFileStates] = useState<FileState[]>([]);
+  const { edgestore } = useEdgeStore();
+  const [flatPhotos, setFlatPhotos] = useState<string[]>([]);
+
+  function updateFileProgress(key: string, progress: FileState['progress']) {
+    setFileStates((fileStates) => {
+      const newFileStates = structuredClone(fileStates);
+      const fileState = newFileStates.find(
+        (fileState) => fileState.key === key
+      );
+      if (fileState) {
+        fileState.progress = progress;
+      }
+      return newFileStates;
+    });
+  }
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitted },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -21,15 +47,22 @@ const AddFlat = () => {
       location: data.location,
       amenities: amenitiesString,
       description: data.description,
-      flatPhotos: '',
+      flatPhotos,
       rent: Number(data.rent),
       totalBedrooms: Number(data.totalBedrooms),
       totalRooms: Number(data.totalRooms),
       squareFeet: Number(data.squareFeet),
     };
 
-    const AddFlatFormData = await addNewFlat(flatData);
-    console.log('Return', AddFlatFormData);
+    const res = await addNewFlat(flatData);
+
+    if (res?.success) {
+      toast.success('Flat added successfully');
+      reset();
+      router.push('/dashboard/my-flats');
+    } else {
+      toast.error(res?.message);
+    }
   };
 
   return (
@@ -195,18 +228,55 @@ const AddFlat = () => {
 
             <div>
               <h2 className="font-lg text-gray-500 my-2">Upload Flat Images</h2>
-              <FileUpload />
+              <MultiImageDropzone
+                value={fileStates}
+                dropzoneOptions={{
+                  maxFiles: 4,
+                }}
+                onChange={(files) => {
+                  setFileStates(files);
+                }}
+                onFilesAdded={async (addedFiles) => {
+                  setFileStates([...fileStates, ...addedFiles]);
+                  await Promise.all(
+                    addedFiles.map(async (addedFileState) => {
+                      try {
+                        const res = await edgestore.publicFiles.upload({
+                          // @ts-ignore
+                          file: addedFileState.file,
+                          onProgressChange: async (progress) => {
+                            updateFileProgress(addedFileState.key, progress);
+                            if (progress === 100) {
+                              // wait 1 second to set it to complete
+                              // so that the user can see the progress bar at 100%
+                              await new Promise((resolve) =>
+                                setTimeout(resolve, 1000)
+                              );
+                              updateFileProgress(
+                                addedFileState.key,
+                                'COMPLETE'
+                              );
+                            }
+                          },
+                        });
+                        setFlatPhotos((prevPhotos) => [...prevPhotos, res.url]);
+                      } catch (err) {
+                        updateFileProgress(addedFileState.key, 'ERROR');
+                      }
+                    })
+                  );
+                }}
+              />
             </div>
 
             <div className="flex gap-7 justify-end">
               <Button
                 type="submit"
                 variant="outline"
-                // disabled={isSubmitted}
+                disabled={isSubmitting}
                 className="text-primary border-primary"
               >
-                {/* {isSubmitted ? <Spinner /> : 'Add flat'} */}
-                Add Flat
+                {isSubmitting ? <Spinner /> : 'Add flat'}
               </Button>
             </div>
           </div>

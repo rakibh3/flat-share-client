@@ -1,11 +1,12 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 const FileUpload = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
 
-  const handleFileChange = (event: any) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files as FileList);
     const acceptedTypes = [
       'image/svg+xml',
