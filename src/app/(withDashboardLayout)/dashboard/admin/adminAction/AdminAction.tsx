@@ -60,29 +60,23 @@ export const deleteFlat = async (flatId: string) => {
 
 export const updateUser = async (
   userId: string,
-  pre: FormData,
-  formData: FormData
+  updatePayload: Partial<{ role: string; activeStatus: string }>
 ) => {
   try {
-    const formattedData = JSON.stringify(Object.fromEntries(formData));
-
     const token = cookies().get('token')?.value || '';
     const headers = new Headers();
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
-    console.log(`${process.env.NEXTAUTH_URL}/manager-user/${userId}`);
 
     const res = await fetch(
       `${process.env.NEXTAUTH_URL}/manager-user/${userId}`,
       {
         method: 'PUT',
         headers: headers,
-        body: formattedData,
+        body: JSON.stringify(updatePayload),
       }
     );
-
     const data = await res.json();
-
     revalidateTag('users');
     return data;
   } catch (error) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import {
   Table,
   TableHeader,
@@ -21,45 +21,38 @@ import { updateUser } from '../adminAction/AdminAction';
 import toast from 'react-hot-toast';
 
 const ManageUsersPage = ({ usersData }: any) => {
-  const [userId, setUserId] = useState('');
   const [users, setUsers] = useState(usersData);
 
-  const [state, formAction] = useFormState(updateUser.bind(null, userId), null);
-
-  const handleUserRoleChange = (userId: any, newRole: any) => {
+  const handleUserRoleChange = async (userId: any, newRole: any) => {
     setUsers((prevUsers: any) =>
       prevUsers?.map((user: any) =>
         user.id === userId ? { ...user, role: newRole } : user
       )
     );
-    setUserId(userId);
 
-    const formData = new FormData();
-    formData.append('role', newRole);
-    formAction(formData);
+    const res = await updateUser(userId, { role: newRole });
+    if (res?.success) {
+      toast.success('User role updated successfully');
+    } else {
+      toast.error('User role update failed');
+    }
   };
-  const handleUserStatusChange = (userId: any, newStatus: any) => {
+
+  const handleUserStatusChange = async (userId: any, newStatus: any) => {
     setUsers((prevUsers: any) =>
-      prevUsers.map((user: any) =>
-        user.id === userId ? { ...user, status: newStatus } : user
+      prevUsers?.map((user: any) =>
+        user.id === userId ? { ...user, activeStatus: newStatus } : user
       )
     );
 
-    setUserId(userId);
-    console.log(userId, newStatus);
-    const formData = new FormData();
-    formData.append('activeStatus', newStatus);
+    const res = await updateUser(userId, { activeStatus: newStatus });
 
-    formAction(formData);
-  };
-
-  useEffect(() => {
-    if (state?.success) {
-      toast.success(state?.message);
-    } else if (state?.success === false) {
-      toast.error(state?.message);
+    if (res?.success) {
+      toast.success('User status updated successfully');
+    } else {
+      toast.error('User status update failed');
     }
-  }, [state]);
+  };
 
   return (
     <div className="flex flex-col gap-8">
