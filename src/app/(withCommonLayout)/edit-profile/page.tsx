@@ -1,29 +1,73 @@
 'use client';
-import { updateEmailORUsername } from '@/app/(withDashboardLayout)/dashboard/(userDashboard)/userAction/userAction';
+import {
+  getMyProfile,
+  updateEmailORUsername,
+} from '@/app/(withDashboardLayout)/dashboard/(userDashboard)/userAction/userAction';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/lib/AuthProvider';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { logoutUser } from '../_action/authAction';
+import { useRouter } from 'next/navigation';
+import Spinner from '../_components/shared/Spinner';
+import { useEffect, useState } from 'react';
 
 const EditProfile = () => {
-  const { user } = useAuth();
+  const { setUser } = useAuth();
+  const [profile, setProfile] = useState({});
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    reset,
+    formState: { errors, isSubmitting, isDirty },
   } = useForm({
     defaultValues: {
-      username: user?.username || '',
-      email: user?.email || '',
+      // @ts-ignore
+      username: profile?.username || '',
+      // @ts-ignore
+      email: profile?.email || '',
     },
   });
 
+  useEffect(() => {
+    const data = async () => {
+      try {
+        const res = await getMyProfile();
+        setProfile(res?.data);
+        reset({
+          username: res?.data?.username || '',
+          email: res?.data?.email || '',
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    data();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const onSubmit = async (data: any) => {
     const res = await updateEmailORUsername(data);
-    console.log(res);
+
+    if (res?.success) {
+      toast.success(res?.message);
+      await logoutUser();
+      setUser(null);
+      router.push('/login');
+    } else toast.error(res?.message);
   };
+
+  if (!profile) {
+    return (
+      <div className="container mx-auto flex justify-center items-center h-screen">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto max-w-md py-12 mt-32">
@@ -39,7 +83,9 @@ const EditProfile = () => {
             <Label htmlFor="username">Username</Label>
             <Input
               id="username"
-              defaultValue={user?.username}
+              type="text"
+              //@ts-ignore
+              defaultValue={profile?.username}
               {...register('username', { required: 'Username is required' })}
             />
           </div>
@@ -57,7 +103,8 @@ const EditProfile = () => {
             <Input
               id="email"
               type="email"
-              defaultValue={user?.email}
+              //@ts-ignore
+              defaultValue={profile?.email}
               {...register('email', { required: 'Email is required' })}
             />
           </div>
@@ -68,7 +115,11 @@ const EditProfile = () => {
               </p>
             )}
           </div>
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            disabled={!isDirty || isSubmitting}
+            className="w-full"
+          >
             Save Changes
           </Button>
         </form>

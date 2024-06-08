@@ -50,7 +50,7 @@ export const loginUser = async (pre: FormData, formData: FormData) => {
 
 export const userInfo = async () => {
   try {
-    const token = cookies().get('token')?.value || '';
+    const token = cookies().get('token')?.value as string;
     let decodedData = null;
 
     if (token) {
@@ -97,5 +97,3 @@ export const logoutUser = async () => {
     console.error(error);
   }
 };
-
-const editProfile = async () => {};
