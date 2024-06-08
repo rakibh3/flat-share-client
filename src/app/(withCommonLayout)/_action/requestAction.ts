@@ -14,9 +14,6 @@ export const createFlatRequest = async (flatId: string) => {
       {
         method: 'POST',
         headers: headers,
-        // next: {
-        //   tags: ['flatBookingRequests'],
-        // },
         body: JSON.stringify({
           flatId: flatId,
         }),

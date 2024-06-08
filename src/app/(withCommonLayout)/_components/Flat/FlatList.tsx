@@ -9,9 +9,9 @@ const FlatList = ({ flats }: any) => {
         Featured Flats
       </h2>
       {flats?.data?.length === 0 && (
-        <div className="text-2xl font-medium text-center text-gray-500 dark:text-gray-400">
+        <p className="text-2xl font-medium text-center text-gray-500 dark:text-gray-400">
           No flats found
-        </div>
+        </p>
       )}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 md:p-6 lg:p-8">
         {flats?.data?.slice(0, 8).map((flat: any) => (

@@ -74,6 +74,16 @@ export const addNewFlat = async (data: any) => {
   return flatData;
 };
 
+export const getFlatDetails = async (flatId: string) => {
+  try {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/flat/${flatId}`);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getMyProfile = async () => {
   try {
     const token = cookies().get('token')?.value || '';

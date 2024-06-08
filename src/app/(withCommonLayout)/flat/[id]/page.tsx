@@ -1,15 +1,42 @@
+'use client';
 import Spinner from '../../_components/shared/Spinner';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPinIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getFlatDetails } from '@/app/(withDashboardLayout)/dashboard/(userDashboard)/userAction/userAction';
+import { useEffect, useState } from 'react';
+import { createFlatRequest } from '../../_action/requestAction';
+import toast from 'react-hot-toast';
 
-const FlatDetailsPage = async ({ params }: any) => {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/flat/${params.id}`);
-  const { data } = await res.json();
+const FlatDetailsPage = ({ params }: any) => {
+  const [data, setData] = useState<any>(null);
+
+  // Load flat details
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getFlatDetails(params.id);
+      const data = res?.data;
+      setData(data);
+    };
+    fetchData();
+  }, [params.id]);
+
+  const handleRequest = async (flatId: string) => {
+    const res = await createFlatRequest(flatId);
+    if (res) {
+      toast.success('Request sent successfully');
+    } else {
+      toast.error('Request failed');
+    }
+  };
 
   if (!data) {
-    return <Spinner />;
+    return (
+      <div className="container mx-auto flex justify-center items-center h-screen">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -110,13 +137,12 @@ const FlatDetailsPage = async ({ params }: any) => {
           </div>
 
           <div className="flex justify-end">
-            <Link
-              href={`/dashboard/flat-requests/${data?.id}`}
+            <Button
+              onClick={() => handleRequest(data?.id)}
               className="inline-flex items-center justify-center rounded-md bg-rose-500 px-4 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-rose-500/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-              prefetch={false}
             >
               Flat Share Request
-            </Link>
+            </Button>
           </div>
         </div>
       </div>
