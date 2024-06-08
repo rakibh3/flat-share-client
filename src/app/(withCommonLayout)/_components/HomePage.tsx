@@ -31,7 +31,7 @@ const HomePage = ({ flats }: any) => {
       return locationMatch && priceRangeMatch && bedroomsMatch;
     });
 
-    setFilteredFlats(filtered);
+    setFilteredFlats({ data: filtered });
   };
 
   return (
