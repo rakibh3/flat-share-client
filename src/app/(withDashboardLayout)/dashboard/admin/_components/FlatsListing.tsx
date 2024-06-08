@@ -21,6 +21,7 @@ const FlatsListing = ({ flatsData: flatListings }: any) => {
   const handleDelete = async (id: any) => {
     try {
       const isDeleted = await deleteFlat(id);
+
       if (isDeleted) {
         toast.success('Flat deleted successfully');
       } else {
@@ -96,7 +97,6 @@ const FlatsListing = ({ flatsData: flatListings }: any) => {
                           href="#"
                           className="bg-rose-400 hover:bg-rose-500 text-gray-800 font-medium py-1 px-2 rounded flex items-center gap-2"
                           onClick={() => handleEdit(flat)}
-                          prefetch={false}
                         >
                           <EditIcon className="w-4 h-6" />
                         </Link>
@@ -114,7 +114,6 @@ const FlatsListing = ({ flatsData: flatListings }: any) => {
                       href="#"
                       className="bg-red-500 hover:bg-red-600 text-white font-medium py-1 px-2 rounded flex items-center gap-2"
                       onClick={() => handleDelete(flat.id)}
-                      prefetch={false}
                     >
                       <Trash2Icon className="w-4 h-6" />
                     </Link>

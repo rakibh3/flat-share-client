@@ -37,7 +37,6 @@ const FlatEditModal = ({ flat, closeModal }: any) => {
     formData.append('totalBedrooms', data.totalBedrooms);
     formData.append('totalRooms', data.totalRooms);
     formData.append('squareFeet', data.squareFeet);
-    formData.append('advanceAmount', data.advanceAmount);
 
     formAction(formData);
 
@@ -107,15 +106,6 @@ const FlatEditModal = ({ flat, closeModal }: any) => {
                 type="number"
                 placeholder="Enter square feet"
                 {...register('squareFeet')}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="advanceAmount">Advance Amount</Label>
-              <Input
-                id="advanceAmount"
-                type="number"
-                placeholder="Enter advance"
-                {...register('advanceAmount')}
               />
             </div>
           </div>

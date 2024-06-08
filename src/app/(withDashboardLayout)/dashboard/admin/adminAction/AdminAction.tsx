@@ -15,7 +15,6 @@ export const updateFlat = async (
       totalBedrooms: Number(Object?.fromEntries(formData).totalBedrooms),
       totalRooms: Number(Object?.fromEntries(formData).totalRooms),
       squareFeet: Number(Object?.fromEntries(formData).squareFeet),
-      advanceAmount: Number(Object?.fromEntries(formData).advanceAmount),
     };
 
     const formattedData = JSON.stringify(newFormData);
