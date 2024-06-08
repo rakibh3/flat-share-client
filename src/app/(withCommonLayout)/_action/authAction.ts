@@ -59,6 +59,7 @@ export const userInfo = async () => {
         id: decodedData.id,
         email: decodedData?.email,
         role: decodedData?.role,
+        username: decodedData?.username,
       };
     } else return null;
   } catch (error) {
