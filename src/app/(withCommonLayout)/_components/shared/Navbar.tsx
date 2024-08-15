@@ -59,7 +59,7 @@ const Navbar = ({ user }: any) => {
 
   return (
     <nav className="bg-white sticky top-0 shadow-md z-10">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
             <Link href="/" className="text-2xl font-bold text-rose-600">

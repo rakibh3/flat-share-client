@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 const AboutPage = () => {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800 mt-20 rounded-md">
       <div className="container px-4 md:px-6">
         <div className="grid gap-10 sm:px-10 md:grid-cols-2 md:gap-16">
           <div>
