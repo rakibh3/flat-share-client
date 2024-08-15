@@ -7,7 +7,6 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 
