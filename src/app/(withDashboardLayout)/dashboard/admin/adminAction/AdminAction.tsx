@@ -48,10 +48,11 @@ export const deleteFlat = async (flatId: string) => {
       method: 'DELETE',
       headers: headers,
     });
+
     if (res.ok) {
-      revalidateTag('flats');
       return true;
     }
+    revalidateTag('flats');
     return false;
   } catch (error) {
     console.error(error);
