@@ -17,9 +17,9 @@ export default async function CommonLayout({
   const user = await userInfo();
 
   return (
-    <div className="mx-auto md:container">
+    <div className="min-h-screen flex flex-col">
       <Navbar user={user} />
-      {children}
+      <main className="flex-grow container mx-auto px-4">{children}</main>
       <FooterPage />
     </div>
   );
